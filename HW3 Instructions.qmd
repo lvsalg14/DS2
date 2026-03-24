@@ -1,0 +1,114 @@
+---
+title: "DS2 HW3"
+author: "Luis Salgado"
+format: html
+execute:
+  message: false
+  warning: false
+  echo: true
+---
+
+The `babynames` dataset in the `babynames` packages contains all births in the U.S. from 1880 to 2015 in which there were at least 5 births of that *sex-name* dyad in that year. (A "dyad" is a combination of two variables, "triad" is three, etc.)
+
+Create a dataset called `babynames_total` that totals `births` across all years. (Note: The case in the new dataset should be `sex` and `name`, which means that each of these dyads should appear only once in the dataset.)
+
+Use this dataset to calculate what is asked below:
+
+```{r setup}
+library(tidyverse)
+library(babynames)
+```
+
+```{r}
+babynames_total <- babynames %>% 
+  group_by(sex, name) %>% 
+  summarize(n = sum(n), .groups="drop")
+
+head(babynames_total)
+```
+
+## 1) 10 most popular names
+
+```{r}
+babynames_total %>% 
+  filter(min_rank(desc(n)) <= 10) %>% 
+  arrange(desc(n))
+```
+
+## 2) Least popular names
+
+a.  What is the smallest value of `births` in the dataset?
+
+    ```{r}
+    babynames_total %>% 
+      filter(min_rank(n) <= 1)
+    ```
+
+    The smallest value of births in the dataset is 5.
+
+b.  How many *sex-name* have that many births?
+
+    There are 15,477 sex-name pairs with 5 births, given that there are 15,477 rows in the calculation completed in 2a.
+
+c.  Based on the way the data were assembled, explain why there are so many.
+
+    There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births "in which there were at least 5 births of that *sex-name* dyad in that year." For this reason, the smallest value of births possible is 5. The reason there are so many can simply be explained by the presence of unique, uncommon names that may have been used one year and then disappeared the next.
+
+## 3) 10 most popular [boys']{.underline} names that end in a vowel
+
+```{r}
+babynames_total %>%
+  filter(sex == "M") %>%
+  filter(str_sub(str_to_lower(name), -1) %in% c("a","e","i","o","u")) %>%
+  filter(min_rank(desc(n)) <= 10) %>% 
+  arrange(desc(n))
+```
+
+## 4) 10 most popular [girls']{.underline} names with joe/jo suffix
+
+Find the 10 most popular girls' names that end in "joe" or "jo", excluding the names "Joe", and "Jo". For this, problem, you should include all spellings, whether or not they are capitalized (so, for example, "Mary Jo" counts as ending in "jo")
+
+```{r}
+babynames_total %>%
+  filter(sex == "F") %>%                                        
+  filter(!name %in% c("Jo", "Joe")) %>%                         
+  filter(str_sub(str_to_lower(name), -2) == "jo" |
+         str_sub(str_to_lower(name), -3) == "joe") %>%        
+  filter(min_rank(desc(n)) <= 10) %>% 
+  arrange(desc(n))
+```
+
+## 5) Allnameslikethis
+
+Did we need to worry about case in the last problem? To answer this, verify the following:
+
+a.  There are no spaces in any names
+
+    ```{r}
+    babynames_total %>%
+      filter(str_detect(name, " "))
+    ```
+
+b.  The first letter is always capitalized
+
+    ```{r}
+    babynames_total %>%
+      filter(!str_detect(str_sub(name, 1, 1), "[A-Z]"))
+    ```
+
+c.  No other letters are capitalized
+
+    ```{r}
+    babynames_total %>%
+      filter(str_detect(str_sub(name, 2), "[A-Z]"))
+    ```
+
+#### The problems below are optional, since they are not working with text, but I thought they provided an interesting challenge.
+
+## 6) Closest to the average (optional)
+
+Calculate the average number of births by *sex-name*. Which *sex-name* is closest to that number? Do this algorithmically in one pipeline, meaning no saving any objects and no typing in the average yourself.
+
+## 7) 10 most commmon cross-sex names (optional)
+
+Show the most common names that are given both to males and to females. You will have to make a decision about how to quantify this - I recommend not looking just at total births (male + female).
