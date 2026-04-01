@@ -35,6 +35,8 @@ babynames_total %>%
   arrange(desc(n))
 ```
 
+Valeria: As a possible alternative, you could first sort with arrange(desc(n)) and then use slice(1:10) to get the top 10.
+
 ## 2) Least popular names
 
 a.  What is the smallest value of `births` in the dataset?
@@ -46,13 +48,19 @@ a.  What is the smallest value of `births` in the dataset?
 
     The smallest value of births in the dataset is 5.
 
+    Valeria: This answer is clear and directly addresses the question.
+
 b.  How many *sex-name* have that many births?
 
     There are 15,477 sex-name pairs with 5 births, given that there are 15,477 rows in the calculation completed in 2a.
 
+Valeria: This result is explained clearly and is easy to understand.
+
 c.  Based on the way the data were assembled, explain why there are so many.
 
     There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births "in which there were at least 5 births of that *sex-name* dyad in that year." For this reason, the smallest value of births possible is 5. The reason there are so many can simply be explained by the presence of unique, uncommon names that may have been used one year and then disappeared the next.
+
+Valeria: This explanation clearly connects to the dataset description and is very easy to follow. I like how you tied your reasoning back to the problem setup.
 
 ## 3) 10 most popular [boys']{.underline} names that end in a vowel
 
