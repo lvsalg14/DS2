@@ -152,15 +152,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  9 M     Richard 2563082
 10 M     Charles 2386048</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Added based on suggestion</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   sex   name          n
+   &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
+ 1 M     James   5150472
+ 2 M     John    5115466
+ 3 M     Robert  4814815
+ 4 M     Michael 4350824
+ 5 F     Mary    4123200
+ 6 M     William 4102604
+ 7 M     David   3611329
+ 8 M     Joseph  2603445
+ 9 M     Richard 2563082
+10 M     Charles 2386048</code></pre>
 </div>
+</div>
+<p>Valeria: As a possible alternative, you could first sort with arrange(desc(n)) and then use slice(1:10) to get the top 10.</p>
 </section>
 <section id="least-popular-names" class="level2">
 <h2 class="anchored" data-anchor-id="least-popular-names">2) Least popular names</h2>
 <ol type="a">
 <li><p>What is the smallest value of <code>births</code> in the dataset?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(n) <span class="sc">&lt;=</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(n) <span class="sc">&lt;=</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15,477 × 3
    sex   name         n
@@ -178,21 +198,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 15,467 more rows</code></pre>
 </div>
 </div>
-<p>The smallest value of births in the dataset is 5.</p></li>
+<p>The smallest value of births in the dataset is 5.</p>
+<p>Valeria: This answer is clear and directly addresses the question.</p></li>
 <li><p>How many <em>sex-name</em> have that many births?</p>
 <p>There are 15,477 sex-name pairs with 5 births, given that there are 15,477 rows in the calculation completed in 2a.</p></li>
-<li><p>Based on the way the data were assembled, explain why there are so many.</p>
-<p>There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births “in which there were at least 5 births of that <em>sex-name</em> dyad in that year.” For this reason, the smallest value of births possible is 5. The reason there are so many can simply be explained by the presence of unique, uncommon names that may have been used one year and then disappeared the next.</p></li>
 </ol>
+<p>Valeria: This result is explained clearly and is easy to understand.</p>
+<ol start="3" type="a">
+<li><p>Based on the way the data were assembled, explain why there are so many.</p>
+<p>There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births “in which there were at least 5 births of that <em>sex-name</em> dyad in that year.” For this reason, the smallest value of births possible is 5. The reason there are so many is likely due to the presence of many unique or uncommon names that appear only a few times, combined with the fact that the dataset has a threshold of including only names with at least 5 births (*edited last sentence to make explanation even more clear).</p></li>
+</ol>
+<p>Valeria: This explanation clearly connects to the dataset description and is very easy to follow. I like how you tied your reasoning back to the problem setup.</p>
 </section>
 <section id="most-popular-boys-names-that-end-in-a-vowel" class="level2">
 <h2 class="anchored" data-anchor-id="most-popular-boys-names-that-end-in-a-vowel">3) 10 most popular <u>boys’</u> names that end in a vowel</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"M"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"e"</span>,<span class="st">"i"</span>,<span class="st">"o"</span>,<span class="st">"u"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(<span class="fu">desc</span>(n)) <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"M"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"e"</span>,<span class="st">"i"</span>,<span class="st">"o"</span>,<span class="st">"u"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(<span class="fu">desc</span>(n)) <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    sex   name           n
@@ -214,13 +239,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="most-popular-girls-names-with-joejo-suffix">4) 10 most popular <u>girls’</u> names with joe/jo suffix</h2>
 <p>Find the 10 most popular girls’ names that end in “joe” or “jo”, excluding the names “Joe”, and “Jo”. For this, problem, you should include all spellings, whether or not they are capitalized (so, for example, “Mary Jo” counts as ending in “jo”)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">%&gt;%</span>                                        </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Jo"</span>, <span class="st">"Joe"</span>)) <span class="sc">%&gt;%</span>                         </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">2</span>) <span class="sc">==</span> <span class="st">"jo"</span> <span class="sc">|</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">3</span>) <span class="sc">==</span> <span class="st">"joe"</span>) <span class="sc">%&gt;%</span>        </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(<span class="fu">desc</span>(n)) <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"F"</span>) <span class="sc">%&gt;%</span>                                        </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Jo"</span>, <span class="st">"Joe"</span>)) <span class="sc">%&gt;%</span>                         </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">2</span>) <span class="sc">==</span> <span class="st">"jo"</span> <span class="sc">|</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(name), <span class="sc">-</span><span class="dv">3</span>) <span class="sc">==</span> <span class="st">"joe"</span>) <span class="sc">%&gt;%</span>        </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">min_rank</span>(<span class="fu">desc</span>(n)) <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    sex   name           n
@@ -244,8 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="a">
 <li><p>There are no spaces in any names</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">" "</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">" "</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 3
 # ℹ 3 variables: sex &lt;chr&gt;, name &lt;chr&gt;, n &lt;int&gt;</code></pre>
@@ -253,8 +278,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div></li>
 <li><p>The first letter is always capitalized</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(<span class="fu">str_sub</span>(name, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"[A-Z]"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(<span class="fu">str_sub</span>(name, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"[A-Z]"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 3
 # ℹ 3 variables: sex &lt;chr&gt;, name &lt;chr&gt;, n &lt;int&gt;</code></pre>
@@ -262,8 +287,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div></li>
 <li><p>No other letters are capitalized</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="fu">str_sub</span>(name, <span class="dv">2</span>), <span class="st">"[A-Z]"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>babynames_total <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="fu">str_sub</span>(name, <span class="dv">2</span>), <span class="st">"[A-Z]"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 3
 # ℹ 3 variables: sex &lt;chr&gt;, name &lt;chr&gt;, n &lt;int&gt;</code></pre>

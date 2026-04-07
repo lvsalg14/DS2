@@ -33,6 +33,11 @@ head(babynames_total)
 babynames_total %>% 
   filter(min_rank(desc(n)) <= 10) %>% 
   arrange(desc(n))
+
+#Added based on suggestion
+babynames_total %>% 
+  arrange(desc(n)) %>% 
+  slice(1:10)
 ```
 
 Valeria: As a possible alternative, you could first sort with arrange(desc(n)) and then use slice(1:10) to get the top 10.
@@ -58,7 +63,7 @@ Valeria: This result is explained clearly and is easy to understand.
 
 c.  Based on the way the data were assembled, explain why there are so many.
 
-    There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births "in which there were at least 5 births of that *sex-name* dyad in that year." For this reason, the smallest value of births possible is 5. The reason there are so many can simply be explained by the presence of unique, uncommon names that may have been used one year and then disappeared the next.
+    There are so many sex-name pairs with 5 births because, as mentioned in the description of the babynames data set at the beginning of the assignment, the data set only includes births "in which there were at least 5 births of that *sex-name* dyad in that year." For this reason, the smallest value of births possible is 5. The reason there are so many is likely due to the presence of many unique or uncommon names that appear only a few times, combined with the fact that the dataset has a threshold of including only names with at least 5 births (\*edited last sentence to make explanation even more clear).
 
 Valeria: This explanation clearly connects to the dataset description and is very easy to follow. I like how you tied your reasoning back to the problem setup.
 
